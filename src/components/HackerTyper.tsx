@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, FormEvent } from "react";
 
 // ── Brief intro — the sell ────────────────────────────────────────────
 const PORTFOLIO_CODE = `> Hey, I'm Juan Manuel Villarraza.
@@ -47,12 +47,24 @@ Let's talk:
 const CHARS_PER_TICK = 2;
 const TICK_MS = 30;
 
+interface ChatMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+
 export default function HackerTyper() {
   const [started, setStarted] = useState(false);
   const [charIndex, setCharIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isFinished = charIndex >= PORTFOLIO_CODE.length;
+
+  // Chat state
+  const [chatReady, setChatReady] = useState(false);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [input, setInput] = useState("");
+  const [isStreaming, setIsStreaming] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleStart = useCallback(() => {
     if (started) return;
@@ -98,12 +110,95 @@ export default function HackerTyper() {
     };
   }, [started, isFinished]);
 
-  // Auto-scroll to bottom as text appears
+  // When intro animation finishes, enable chat
+  useEffect(() => {
+    if (isFinished && !chatReady) {
+      const timer = setTimeout(() => {
+        setChatReady(true);
+      }, 600);
+      return () => clearTimeout(timer);
+    }
+  }, [isFinished, chatReady]);
+
+  // Focus input when chat becomes ready
+  useEffect(() => {
+    if (chatReady && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [chatReady]);
+
+  // Auto-scroll to bottom
   useEffect(() => {
     if (containerRef.current) {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
-  }, [charIndex]);
+  }, [charIndex, messages, chatReady]);
+
+  // Send message to AI
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isStreaming) return;
+
+    const userMessage: ChatMessage = { role: "user", content: input.trim() };
+    const newMessages = [...messages, userMessage];
+    setMessages(newMessages);
+    setInput("");
+    setIsStreaming(true);
+
+    // Add empty assistant message that we'll stream into
+    setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
+
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: newMessages.map((m) => ({
+            role: m.role,
+            content: m.content,
+          })),
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("API request failed");
+      }
+
+      const reader = res.body?.getReader();
+      const decoder = new TextDecoder();
+
+      if (!reader) throw new Error("No reader");
+
+      let done = false;
+      while (!done) {
+        const result = await reader.read();
+        done = result.done;
+        if (result.value) {
+          const text = decoder.decode(result.value, { stream: !done });
+          setMessages((prev) => {
+            const updated = prev.map((m, idx) =>
+              idx === prev.length - 1 && m.role === "assistant"
+                ? { ...m, content: m.content + text }
+                : m
+            );
+            return updated;
+          });
+        }
+      }
+    } catch {
+      setMessages((prev) => {
+        const updated = [...prev];
+        const last = updated[updated.length - 1];
+        if (last && last.role === "assistant") {
+          last.content = "[Error: Could not reach Juan AI. Try again later.]";
+        }
+        return [...updated];
+      });
+    } finally {
+      setIsStreaming(false);
+      inputRef.current?.focus();
+    }
+  };
 
   return (
     <div className="flex flex-col h-screen w-screen">
@@ -117,10 +212,57 @@ export default function HackerTyper() {
         style={{ fontSize: "clamp(13px, 1.4vw, 18px)", lineHeight: "1.6" }}
       >
         {started ? (
-          <pre className="whitespace-pre-wrap break-words font-mono text-[var(--color-green)]">
-            {PORTFOLIO_CODE.slice(0, charIndex)}
-            {!isFinished && <span className="cursor-blink text-[var(--color-green)]">&#9608;</span>}
-          </pre>
+          <>
+            {/* Intro text */}
+            <pre className="whitespace-pre-wrap break-words font-mono text-[var(--color-green)]">
+              {PORTFOLIO_CODE.slice(0, charIndex)}
+              {!isFinished && <span className="cursor-blink text-[var(--color-green)]">&#9608;</span>}
+            </pre>
+
+            {/* Chat section — appears after intro finishes */}
+            {chatReady && (
+              <div className="mt-8 border-t border-[var(--color-green)] border-opacity-30 pt-6">
+                <p className="text-[var(--color-green)] opacity-50 mb-4 font-mono">
+                  ── Juan AI is online. Ask me anything. ──
+                </p>
+
+                {/* Chat messages */}
+                {messages.map((msg, i) => (
+                  <div key={i} className="mb-3 font-mono">
+                    {msg.role === "user" ? (
+                      <div className="text-[var(--color-green)]">
+                        <span className="opacity-60">&gt; </span>
+                        {msg.content}
+                      </div>
+                    ) : (
+                      <div className="text-[var(--color-green)] opacity-80 pl-2">
+                        {msg.content || (
+                          <span className="cursor-blink">&#9608;</span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                ))}
+
+                {/* Input */}
+                <form onSubmit={handleSubmit} className="flex items-center gap-2 font-mono mt-4">
+                  <span className="text-[var(--color-green)] opacity-60">&gt;</span>
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    disabled={isStreaming}
+                    placeholder={isStreaming ? "thinking..." : "ask juan anything..."}
+                    className="flex-1 bg-transparent text-[var(--color-green)] outline-none border-none font-mono placeholder:text-[var(--color-green)] placeholder:opacity-30 caret-[var(--color-green)]"
+                    style={{ fontSize: "inherit" }}
+                    autoComplete="off"
+                    spellCheck={false}
+                  />
+                </form>
+              </div>
+            )}
+          </>
         ) : (
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center opacity-40">
             <p className="text-2xl sm:text-3xl mb-3">Hi!</p>
@@ -139,7 +281,7 @@ export default function HackerTyper() {
           <span className="opacity-40 hidden sm:inline">Buenos Aires, Argentina</span>
         </div>
         <div className="hidden sm:block opacity-60">
-          {started ? `${Math.round((charIndex / PORTFOLIO_CODE.length) * 100)}%` : ""}
+          {chatReady ? "Juan AI" : started ? `${Math.round((charIndex / PORTFOLIO_CODE.length) * 100)}%` : ""}
         </div>
       </div>
     </div>
