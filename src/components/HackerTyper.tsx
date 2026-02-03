@@ -46,6 +46,8 @@ Let's talk:
 
 const CHARS_PER_TICK = 2;
 const TICK_MS = 30;
+const RESPONSE_CHARS_PER_TICK = 2;
+const RESPONSE_TICK_MS = 30;
 
 interface ChatMessage {
   role: "user" | "assistant";
@@ -65,6 +67,16 @@ export default function HackerTyper() {
   const [input, setInput] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Response animation state
+  const [fullResponse, setFullResponse] = useState("");
+  const [responseCharIndex, setResponseCharIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const responseIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Latest Q&A to display (only the most recent)
+  const latestQuestion = messages.length >= 2 ? messages[messages.length - 2] : null;
+  const latestAnswer = messages.length >= 1 && messages[messages.length - 1].role === "assistant" ? messages[messages.length - 1] : null;
 
   const handleStart = useCallback(() => {
     if (started) return;
@@ -120,33 +132,62 @@ export default function HackerTyper() {
     }
   }, [isFinished, chatReady]);
 
-  // Focus input when chat becomes ready
+  // Focus input when chat becomes ready or animation finishes
   useEffect(() => {
-    if (chatReady && inputRef.current) {
+    if ((chatReady && !isAnimating && !isStreaming) && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [chatReady]);
+  }, [chatReady, isAnimating, isStreaming]);
 
-  // Auto-scroll to bottom
+  // Auto-scroll: follow text as it types (intro + chat responses)
   useEffect(() => {
     if (containerRef.current) {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
-  }, [charIndex, messages, chatReady]);
+  }, [charIndex, responseCharIndex, messages, chatReady]);
+
+  // Animate the response with typewriter effect
+  useEffect(() => {
+    if (!fullResponse || !isAnimating) return;
+
+    responseIntervalRef.current = setInterval(() => {
+      setResponseCharIndex((prev) => {
+        const next = Math.min(prev + RESPONSE_CHARS_PER_TICK, fullResponse.length);
+        if (next >= fullResponse.length && responseIntervalRef.current) {
+          clearInterval(responseIntervalRef.current);
+          setIsAnimating(false);
+          // Update the actual message with the full content
+          setMessages((prev) => {
+            const updated = prev.map((m, idx) =>
+              idx === prev.length - 1 && m.role === "assistant"
+                ? { ...m, content: fullResponse }
+                : m
+            );
+            return updated;
+          });
+        }
+        return next;
+      });
+    }, RESPONSE_TICK_MS);
+
+    return () => {
+      if (responseIntervalRef.current) clearInterval(responseIntervalRef.current);
+    };
+  }, [fullResponse, isAnimating]);
 
   // Send message to AI
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isStreaming) return;
+    if (!input.trim() || isStreaming || isAnimating) return;
 
     const userMessage: ChatMessage = { role: "user", content: input.trim() };
+    // Keep history for API context but only display the latest
     const newMessages = [...messages, userMessage];
-    setMessages(newMessages);
+    setMessages([...newMessages, { role: "assistant", content: "" }]);
     setInput("");
     setIsStreaming(true);
-
-    // Add empty assistant message that we'll stream into
-    setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
+    setFullResponse("");
+    setResponseCharIndex(0);
 
     try {
       const res = await fetch("/api/chat", {
@@ -169,31 +210,25 @@ export default function HackerTyper() {
 
       if (!reader) throw new Error("No reader");
 
+      let accumulated = "";
       let done = false;
       while (!done) {
         const result = await reader.read();
         done = result.done;
         if (result.value) {
           const text = decoder.decode(result.value, { stream: !done });
-          setMessages((prev) => {
-            const updated = prev.map((m, idx) =>
-              idx === prev.length - 1 && m.role === "assistant"
-                ? { ...m, content: m.content + text }
-                : m
-            );
-            return updated;
-          });
+          accumulated += text;
         }
       }
+
+      // Got the full response — now animate it
+      setFullResponse(accumulated);
+      setResponseCharIndex(0);
+      setIsAnimating(true);
     } catch {
-      setMessages((prev) => {
-        const updated = [...prev];
-        const last = updated[updated.length - 1];
-        if (last && last.role === "assistant") {
-          last.content = "[Error: Could not reach Juan AI. Try again later.]";
-        }
-        return [...updated];
-      });
+      setFullResponse("[Error: Could not reach Juan AI. Try again later.]");
+      setResponseCharIndex(0);
+      setIsAnimating(true);
     } finally {
       setIsStreaming(false);
       inputRef.current?.focus();
@@ -213,53 +248,84 @@ export default function HackerTyper() {
       >
         {started ? (
           <>
-            {/* Intro text */}
-            <pre className="whitespace-pre-wrap break-words font-mono text-[var(--color-green)]">
-              {PORTFOLIO_CODE.slice(0, charIndex)}
-              {!isFinished && <span className="cursor-blink text-[var(--color-green)]">&#9608;</span>}
-            </pre>
+            {/* Show intro animation OR chat */}
+            {!chatReady || (!latestQuestion && !isStreaming) ? (
+              <>
+                {/* Intro text */}
+                <pre className="whitespace-pre-wrap break-words font-mono text-[var(--color-green)]">
+                  {PORTFOLIO_CODE.slice(0, charIndex)}
+                  {!isFinished && <span className="cursor-blink text-[var(--color-green)]">&#9608;</span>}
+                </pre>
 
-            {/* Chat section — appears after intro finishes */}
-            {chatReady && (
-              <div className="mt-8 border-t border-[var(--color-green)] border-opacity-30 pt-6">
-                <p className="text-[var(--color-green)] opacity-50 mb-4 font-mono">
-                  ── Juan AI is online. Ask me anything. ──
-                </p>
-
-                {/* Chat messages */}
-                {messages.map((msg, i) => (
-                  <div key={i} className="mb-3 font-mono">
-                    {msg.role === "user" ? (
-                      <div className="text-[var(--color-green)]">
-                        <span className="opacity-60">&gt; </span>
-                        {msg.content}
-                      </div>
-                    ) : (
-                      <div className="text-[var(--color-green)] opacity-80 pl-2">
-                        {msg.content || (
-                          <span className="cursor-blink">&#9608;</span>
-                        )}
-                      </div>
-                    )}
+                {/* Prompt appears after intro finishes */}
+                {chatReady && (
+                  <div className="mt-8 pt-6">
+                    <p className="text-[var(--color-green)] opacity-50 mb-4 font-mono">
+                      ── Juan AI is online. Ask me anything. ──
+                    </p>
+                    <form onSubmit={handleSubmit} className="flex items-center gap-2 font-mono mt-4">
+                      <span className="text-[var(--color-green)] opacity-60">&gt;</span>
+                      <input
+                        ref={inputRef}
+                        type="text"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        disabled={isStreaming || isAnimating}
+                        placeholder="ask juan anything..."
+                        className="flex-1 bg-transparent text-[var(--color-green)] outline-none border-none font-mono placeholder:text-[var(--color-green)] placeholder:opacity-30 caret-[var(--color-green)]"
+                        style={{ fontSize: "inherit" }}
+                        autoComplete="off"
+                        spellCheck={false}
+                      />
+                    </form>
                   </div>
-                ))}
+                )}
+              </>
+            ) : (
+              /* Chat mode — only show the latest question & animated response */
+              <div className="font-mono">
+                {/* Latest question */}
+                {latestQuestion && (
+                  <div className="mb-6 text-[var(--color-green)]">
+                    <span className="opacity-60">&gt; </span>
+                    {latestQuestion.content}
+                  </div>
+                )}
 
-                {/* Input */}
-                <form onSubmit={handleSubmit} className="flex items-center gap-2 font-mono mt-4">
-                  <span className="text-[var(--color-green)] opacity-60">&gt;</span>
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    disabled={isStreaming}
-                    placeholder={isStreaming ? "thinking..." : "ask juan anything..."}
-                    className="flex-1 bg-transparent text-[var(--color-green)] outline-none border-none font-mono placeholder:text-[var(--color-green)] placeholder:opacity-30 caret-[var(--color-green)]"
-                    style={{ fontSize: "inherit" }}
-                    autoComplete="off"
-                    spellCheck={false}
-                  />
-                </form>
+                {/* Animated response */}
+                {(isStreaming || isAnimating || latestAnswer) && (
+                  <pre className="whitespace-pre-wrap break-words font-mono text-[var(--color-green)] opacity-80">
+                    {isStreaming ? (
+                      <span className="cursor-blink">&#9608;</span>
+                    ) : isAnimating ? (
+                      <>
+                        {fullResponse.slice(0, responseCharIndex)}
+                        <span className="cursor-blink">&#9608;</span>
+                      </>
+                    ) : (
+                      latestAnswer?.content
+                    )}
+                  </pre>
+                )}
+
+                {/* Input for next question — shows after animation finishes */}
+                {!isStreaming && !isAnimating && latestAnswer && (
+                  <form onSubmit={handleSubmit} className="flex items-center gap-2 font-mono mt-8 pt-6">
+                    <span className="text-[var(--color-green)] opacity-60">&gt;</span>
+                    <input
+                      ref={inputRef}
+                      type="text"
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      disabled={isStreaming || isAnimating}
+                      placeholder="ask juan anything..."
+                      className="flex-1 bg-transparent text-[var(--color-green)] outline-none border-none font-mono placeholder:text-[var(--color-green)] placeholder:opacity-30 caret-[var(--color-green)]"
+                      style={{ fontSize: "inherit" }}
+                      autoComplete="off"
+                      spellCheck={false}
+                    />
+                  </form>
+                )}
               </div>
             )}
           </>
