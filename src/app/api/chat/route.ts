@@ -7,7 +7,7 @@ const openai = new OpenAI({
 
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
+    const { messages, lang } = await req.json();
 
     if (!process.env.OPENAI_API_KEY) {
       return new Response(
@@ -16,11 +16,18 @@ export async function POST(req: Request) {
       );
     }
 
+    const LANG_NAMES: Record<string, string> = {
+      en: "English", es: "Spanish (Argentinian/rioplatense)", pt: "Portuguese",
+      fr: "French", it: "Italian", zh: "Chinese", ko: "Korean", ja: "Japanese",
+    };
+    const langHint = LANG_NAMES[lang] || "English";
+    const systemPrompt = `${JUAN_SYSTEM_PROMPT}\n\nIMPORTANT: The user has selected ${langHint} as their language. Respond in ${langHint}.`;
+
     const stream = await openai.chat.completions.create({
       model: "gpt-4o",
       stream: true,
       messages: [
-        { role: "system", content: JUAN_SYSTEM_PROMPT },
+        { role: "system", content: systemPrompt },
         ...messages,
       ],
       max_tokens: 500,

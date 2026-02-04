@@ -1,46 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback, FormEvent } from "react";
-
-// ── Brief intro — the sell ────────────────────────────────────────────
-const PORTFOLIO_CODE = `> Hey, I'm Juan Manuel Villarraza.
-
-CTO at tntlabs.xyz - Product Studio and my own company
-focused on removing friction from DeFi.
-Staff Engineer & Architect based in Buenos Aires.
-I build things that move value across blockchains
-— and I make them feel simple.
-
-Most recently at Squid, where I built and scaled
-cross-chain routing infrastructure from the ground up.
-Hundreds of recurrent users, low latency, elegant
-architecture — designed to last, not just to ship.
-
-Before that, I led frontend teams in crypto fintech,
-built OTC trading desks, shipped NFT marketplaces
-end-to-end, and built UI at Globant and Mercado Libre
-for millions of users.
-
-I've been writing code professionally since 2017.
-Bachelor's in Computer Science from Universidad
-Nacional de Rosario. Went from junior dev at a small
-fintech in Rosario to staff engineer on a globally
-distributed team — and now CTO of my own.
-
-What I'm good at:
-
-  → Designing systems that scale without losing clarity
-  → Leading teams while staying hands-on
-  → Bridging the gap between product vision and code
-  → Making Web3 accessible to Web2 developers
-  → Mentoring engineers and raising the bar
-
-I speak at Ethereum conferences.
-I think in systems, but I ship in sprints.
-I care about the craft, the team, and the user.
-
-Let's talk juan@tntlabs.xyz
-`;
+import { LANGUAGES, INTRO_TEXT, UI_TEXT, type LangCode } from "@/lib/translations";
 
 const CHARS_PER_TICK = 2;
 const TICK_MS = 30;
@@ -53,11 +14,14 @@ interface ChatMessage {
 }
 
 export default function HackerTyper() {
+  const [lang, setLang] = useState<LangCode>("en");
   const [started, setStarted] = useState(false);
   const [charIndex, setCharIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const isFinished = charIndex >= PORTFOLIO_CODE.length;
+
+  const introText = INTRO_TEXT[lang];
+  const isFinished = charIndex >= introText.length;
 
   // Chat state
   const [chatReady, setChatReady] = useState(false);
@@ -76,6 +40,10 @@ export default function HackerTyper() {
   const [introZoomOut, setIntroZoomOut] = useState(false);
   const [introHidden, setIntroHidden] = useState(false);
 
+  // Language dropdown
+  const [langOpen, setLangOpen] = useState(false);
+  const langRef = useRef<HTMLDivElement>(null);
+
   // Latest Q&A to display (only the most recent)
   const latestQuestion = messages.length >= 2 ? messages[messages.length - 2] : null;
   const latestAnswer = messages.length >= 1 && messages[messages.length - 1].role === "assistant" ? messages[messages.length - 1] : null;
@@ -84,6 +52,42 @@ export default function HackerTyper() {
     if (started) return;
     setStarted(true);
   }, [started]);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    if (!langOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) {
+        setLangOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [langOpen]);
+
+  // Handle language change — reset intro animation
+  const handleLangChange = useCallback((newLang: LangCode) => {
+    setLangOpen(false);
+    if (newLang === lang) return;
+    setLang(newLang);
+    setCharIndex(0);
+    setChatReady(false);
+    setIntroZoomOut(false);
+    setIntroHidden(false);
+    setMessages([]);
+    setInput("");
+    setFullResponse("");
+    setResponseCharIndex(0);
+    setIsAnimating(false);
+    setIsStreaming(false);
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    if (responseIntervalRef.current) clearInterval(responseIntervalRef.current);
+    // Re-trigger the typing animation
+    if (started) {
+      setStarted(false);
+      setTimeout(() => setStarted(true), 50);
+    }
+  }, [lang, started]);
 
   // Listen for first keypress or click
   useEffect(() => {
@@ -111,8 +115,8 @@ export default function HackerTyper() {
 
     intervalRef.current = setInterval(() => {
       setCharIndex((prev) => {
-        const next = Math.min(prev + CHARS_PER_TICK, PORTFOLIO_CODE.length);
-        if (next >= PORTFOLIO_CODE.length && intervalRef.current) {
+        const next = Math.min(prev + CHARS_PER_TICK, introText.length);
+        if (next >= introText.length && intervalRef.current) {
           clearInterval(intervalRef.current);
         }
         return next;
@@ -122,7 +126,7 @@ export default function HackerTyper() {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [started, isFinished]);
+  }, [started, isFinished, introText.length]);
 
   // When intro animation finishes, enable chat
   useEffect(() => {
@@ -204,6 +208,7 @@ export default function HackerTyper() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          lang,
           messages: newMessages.map((m) => ({
             role: m.role,
             content: m.content,
@@ -252,6 +257,35 @@ export default function HackerTyper() {
       {/* Scanline overlay */}
       <div className="scanline" />
 
+      {/* Language dropdown — top right */}
+      <div ref={langRef} className="absolute top-3 right-3 z-50 font-mono text-xs">
+        <button
+          onClick={(e) => { e.stopPropagation(); setLangOpen((v) => !v); }}
+          className="flex items-center gap-1.5 px-2 py-1 border border-[var(--color-green)]/40 text-[var(--color-green)] hover:border-[var(--color-green)] transition-colors"
+        >
+          <span>{LANGUAGES.find((l) => l.code === lang)?.label}</span>
+          <span className="text-[10px] opacity-50">{langOpen ? "▲" : "▼"}</span>
+        </button>
+        {langOpen && (
+          <div className="absolute right-0 mt-1 border border-[var(--color-green)]/40 bg-[var(--color-bg)] min-w-[120px]">
+            {LANGUAGES.map((l) => (
+              <button
+                key={l.code}
+                onClick={(e) => { e.stopPropagation(); handleLangChange(l.code); }}
+                className={`block w-full text-left px-3 py-1.5 transition-colors ${
+                  lang === l.code
+                    ? "text-[var(--color-green)] bg-[var(--color-green)]/10"
+                    : "text-[var(--color-green)]/50 hover:text-[var(--color-green)] hover:bg-[var(--color-green)]/5"
+                }`}
+              >
+                <span className="inline-block w-8">{l.label}</span>
+                <span className="opacity-60">{l.name}</span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
       {/* Main content area */}
       <div
         ref={containerRef}
@@ -268,7 +302,7 @@ export default function HackerTyper() {
               >
                 {/* Intro text */}
                 <pre className="whitespace-pre-wrap break-words font-mono text-[var(--color-green)]">
-                  {PORTFOLIO_CODE.slice(0, charIndex)}
+                  {introText.slice(0, charIndex)}
                   {!isFinished && <span className="cursor-blink text-[var(--color-green)]">&#9608;</span>}
                 </pre>
 
@@ -276,7 +310,7 @@ export default function HackerTyper() {
                 {chatReady && (
                   <div className="mt-8 pt-6">
                     <p className="text-[var(--color-green)] opacity-50 mb-4 font-mono">
-                      ── Juan AI is online. Ask me anything. ──
+                      ── {UI_TEXT[lang].online} ──
                     </p>
                   </div>
                 )}
@@ -328,7 +362,7 @@ export default function HackerTyper() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               disabled={isStreaming || isAnimating}
-              placeholder="ask juan anything..."
+              placeholder={UI_TEXT[lang].placeholder}
               className="flex-1 bg-transparent text-[var(--color-green)] outline-none border-none font-mono placeholder:text-[var(--color-green)] placeholder:opacity-30 caret-[var(--color-green)]"
               style={{ fontSize: "inherit" }}
               autoComplete="off"
@@ -348,7 +382,7 @@ export default function HackerTyper() {
           <span className="opacity-40 hidden sm:inline">Buenos Aires, Argentina</span>
         </div>
         <div className="hidden sm:block opacity-60">
-          {chatReady ? "Juan AI" : started ? `${Math.round((charIndex / PORTFOLIO_CODE.length) * 100)}%` : ""}
+          {chatReady ? "Juan AI" : started ? `${Math.round((charIndex / introText.length) * 100)}%` : ""}
         </div>
       </div>
     </div>
