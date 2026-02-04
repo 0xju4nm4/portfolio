@@ -8,8 +8,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio // HackerTyper",
-  description: "Type anything to reveal my portfolio",
+  title: "Juan Villarraza",
+  description: "Your Fav 10x Engineer",
 };
 
 export const viewport = {
