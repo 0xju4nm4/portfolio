@@ -72,6 +72,10 @@ export default function HackerTyper() {
   const [isAnimating, setIsAnimating] = useState(false);
   const responseIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  // Intro zoom-out transition
+  const [introZoomOut, setIntroZoomOut] = useState(false);
+  const [introHidden, setIntroHidden] = useState(false);
+
   // Latest Q&A to display (only the most recent)
   const latestQuestion = messages.length >= 2 ? messages[messages.length - 2] : null;
   const latestAnswer = messages.length >= 1 && messages[messages.length - 1].role === "assistant" ? messages[messages.length - 1] : null;
@@ -187,6 +191,14 @@ export default function HackerTyper() {
     setFullResponse("");
     setResponseCharIndex(0);
 
+    // Trigger zoom-out on intro if this is the first message
+    if (!introHidden) {
+      setIntroZoomOut(true);
+      setTimeout(() => {
+        setIntroHidden(true);
+      }, 600);
+    }
+
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
@@ -233,7 +245,7 @@ export default function HackerTyper() {
     }
   };
 
-  const showChatMode = chatReady && (latestQuestion || isStreaming);
+  const showChatMode = chatReady && introHidden && (latestQuestion || isStreaming);
 
   return (
     <div className="flex flex-col h-dvh w-dvw overflow-x-hidden">
@@ -249,7 +261,11 @@ export default function HackerTyper() {
         {started ? (
           <>
             {!showChatMode ? (
-              <>
+              <div
+                className={`transition-all duration-500 ease-in origin-center ${
+                  introZoomOut ? "scale-0 opacity-0" : "scale-100 opacity-100"
+                }`}
+              >
                 {/* Intro text */}
                 <pre className="whitespace-pre-wrap break-words font-mono text-[var(--color-green)]">
                   {PORTFOLIO_CODE.slice(0, charIndex)}
@@ -264,10 +280,10 @@ export default function HackerTyper() {
                     </p>
                   </div>
                 )}
-              </>
+              </div>
             ) : (
               /* Chat mode — only show the latest question & animated response */
-              <div className="font-mono">
+              <div className="font-mono animate-fade-in">
                 {/* Latest question */}
                 {latestQuestion && (
                   <div className="mb-6 text-[var(--color-green)]">
