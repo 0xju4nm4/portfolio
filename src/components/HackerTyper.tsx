@@ -233,21 +233,22 @@ export default function HackerTyper() {
     }
   };
 
+  const showChatMode = chatReady && (latestQuestion || isStreaming);
+
   return (
     <div className="flex flex-col h-dvh w-dvw overflow-x-hidden">
       {/* Scanline overlay */}
       <div className="scanline" />
 
-      {/* Main code area */}
+      {/* Main content area */}
       <div
         ref={containerRef}
-        className="flex-1 overflow-y-auto p-4 sm:p-6 pb-16 crt-glow"
+        className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-6 crt-glow"
         style={{ fontSize: "clamp(13px, 1.4vw, 18px)", lineHeight: "1.6" }}
       >
         {started ? (
           <>
-            {/* Show intro animation OR chat */}
-            {!chatReady || (!latestQuestion && !isStreaming) ? (
+            {!showChatMode ? (
               <>
                 {/* Intro text */}
                 <pre className="whitespace-pre-wrap break-words font-mono text-[var(--color-green)]">
@@ -261,21 +262,6 @@ export default function HackerTyper() {
                     <p className="text-[var(--color-green)] opacity-50 mb-4 font-mono">
                       ── Juan AI is online. Ask me anything. ──
                     </p>
-                    <form onSubmit={handleSubmit} className="flex items-center gap-2 font-mono mt-4">
-                      <span className="text-[var(--color-green)] opacity-60">&gt;</span>
-                      <input
-                        ref={inputRef}
-                        type="text"
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        disabled={isStreaming || isAnimating}
-                        placeholder="ask juan anything..."
-                        className="flex-1 bg-transparent text-[var(--color-green)] outline-none border-none font-mono placeholder:text-[var(--color-green)] placeholder:opacity-30 caret-[var(--color-green)]"
-                        style={{ fontSize: "inherit" }}
-                        autoComplete="off"
-                        spellCheck={false}
-                      />
-                    </form>
                   </div>
                 )}
               </>
@@ -305,25 +291,6 @@ export default function HackerTyper() {
                     )}
                   </pre>
                 )}
-
-                {/* Input for next question — shows after animation finishes */}
-                {!isStreaming && !isAnimating && latestAnswer && (
-                  <form onSubmit={handleSubmit} className="flex items-center gap-2 font-mono mt-8 pt-6">
-                    <span className="text-[var(--color-green)] opacity-60">&gt;</span>
-                    <input
-                      ref={inputRef}
-                      type="text"
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      disabled={isStreaming || isAnimating}
-                      placeholder="ask juan anything..."
-                      className="flex-1 bg-transparent text-[var(--color-green)] outline-none border-none font-mono placeholder:text-[var(--color-green)] placeholder:opacity-30 caret-[var(--color-green)]"
-                      style={{ fontSize: "inherit" }}
-                      autoComplete="off"
-                      spellCheck={false}
-                    />
-                  </form>
-                )}
               </div>
             )}
           </>
@@ -333,6 +300,27 @@ export default function HackerTyper() {
           </div>
         )}
       </div>
+
+      {/* Fixed input area — always visible when chat is ready */}
+      {chatReady && (
+        <div className="shrink-0 px-4 sm:px-6 py-3 bg-[var(--color-bg)]" style={{ fontSize: "clamp(13px, 1.4vw, 18px)" }}>
+          <form onSubmit={handleSubmit} className="flex items-center gap-2 font-mono">
+            <span className="text-[var(--color-green)] opacity-60">&gt;</span>
+            <input
+              ref={inputRef}
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              disabled={isStreaming || isAnimating}
+              placeholder="ask juan anything..."
+              className="flex-1 bg-transparent text-[var(--color-green)] outline-none border-none font-mono placeholder:text-[var(--color-green)] placeholder:opacity-30 caret-[var(--color-green)]"
+              style={{ fontSize: "inherit" }}
+              autoComplete="off"
+              spellCheck={false}
+            />
+          </form>
+        </div>
+      )}
 
       {/* Bottom bar */}
       <div className="flex items-center justify-between px-4 py-2 border-t border-[var(--color-green)] text-xs sm:text-sm font-mono text-[var(--color-green)] bg-[var(--color-bg)] shrink-0">
