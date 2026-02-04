@@ -24,7 +24,7 @@ export async function POST(req: Request) {
         ...messages,
       ],
       max_tokens: 500,
-      temperature: 0.7,
+      temperature: 0.85,
     });
 
     // Convert OpenAI stream to ReadableStream

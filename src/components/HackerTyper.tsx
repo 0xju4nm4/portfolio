@@ -5,7 +5,8 @@ import { useState, useEffect, useRef, useCallback, FormEvent } from "react";
 // ── Brief intro — the sell ────────────────────────────────────────────
 const PORTFOLIO_CODE = `> Hey, I'm Juan Manuel Villarraza.
 
-CTO at tntlabs.xyz — my own company.
+CTO at tntlabs.xyz - Product Studio and my own company
+focused on removing friction from DeFi.
 Staff Engineer & Architect based in Buenos Aires.
 I build things that move value across blockchains
 — and I make them feel simple.
