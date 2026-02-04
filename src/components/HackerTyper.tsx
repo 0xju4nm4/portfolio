@@ -38,10 +38,7 @@ I speak at Ethereum conferences.
 I think in systems, but I ship in sprints.
 I care about the craft, the team, and the user.
 
-Let's talk:
-  juan@tntlabs.xyz
-  linkedin.com/in/juan-manuel-villarraza-646958151
-  github.com/0xju4nm4
+Let's talk juan@tntlabs.xyz
 `;
 
 const CHARS_PER_TICK = 2;
@@ -236,7 +233,7 @@ export default function HackerTyper() {
   };
 
   return (
-    <div className="flex flex-col h-screen w-screen">
+    <div className="flex flex-col h-dvh w-dvw overflow-x-hidden">
       {/* Scanline overlay */}
       <div className="scanline" />
 
@@ -332,7 +329,6 @@ export default function HackerTyper() {
         ) : (
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center opacity-40">
             <p className="text-2xl sm:text-3xl mb-3">Hi!</p>
-            <p className="text-sm">Press any key or click anywhere</p>
           </div>
         )}
       </div>
@@ -343,7 +339,7 @@ export default function HackerTyper() {
           <a href="mailto:juan@tntlabs.xyz" className="hover:underline">Email</a>
           <a href="https://linkedin.com/in/juan-manuel-villarraza-646958151" target="_blank" rel="noopener noreferrer" className="hover:underline">LinkedIn</a>
           <a href="https://github.com/0xju4nm4" target="_blank" rel="noopener noreferrer" className="hover:underline">GitHub</a>
-          <a href="https://tntlabs.xyz" target="_blank" rel="noopener noreferrer" className="hover:underline">tntlabs.xyz</a>
+          <a href="https://tntlabs.xyz" target="_blank" rel="noopener noreferrer" className="hover:underline">TNT Labs</a>
           <span className="opacity-40 hidden sm:inline">Buenos Aires, Argentina</span>
         </div>
         <div className="hidden sm:block opacity-60">
