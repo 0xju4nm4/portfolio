@@ -326,13 +326,13 @@ Ethereum カンファレンスで登壇しています。
 `,
 };
 
-export const UI_TEXT: Record<LangCode, { online: string; placeholder: string }> = {
-  en: { online: "Juan AI is online. Ask me anything.", placeholder: "ask juan anything..." },
-  es: { online: "Juan AI está online. Preguntame lo que quieras.", placeholder: "preguntale a juan..." },
-  pt: { online: "Juan AI está online. Me pergunte qualquer coisa.", placeholder: "pergunte ao juan..." },
-  fr: { online: "Juan AI est en ligne. Demandez-moi ce que vous voulez.", placeholder: "demandez à juan..." },
-  it: { online: "Juan AI è online. Chiedimi quello che vuoi.", placeholder: "chiedi a juan..." },
-  zh: { online: "Juan AI 在线。随便问我。", placeholder: "问 juan 任何问题..." },
-  ko: { online: "Juan AI 온라인. 뭐든 물어보세요.", placeholder: "juan에게 물어보세요..." },
-  ja: { online: "Juan AI オンライン。何でも聞いてください。", placeholder: "juan に何でも聞いて..." },
+export const UI_TEXT: Record<LangCode, { online: string; placeholder: string; back: string }> = {
+  en: { online: "Juan AI is online. Ask me anything.", placeholder: "ask juan anything...", back: "back" },
+  es: { online: "Juan AI está online. Preguntame lo que quieras.", placeholder: "preguntale a juan...", back: "volver" },
+  pt: { online: "Juan AI está online. Me pergunte qualquer coisa.", placeholder: "pergunte ao juan...", back: "voltar" },
+  fr: { online: "Juan AI est en ligne. Demandez-moi ce que vous voulez.", placeholder: "demandez à juan...", back: "retour" },
+  it: { online: "Juan AI è online. Chiedimi quello che vuoi.", placeholder: "chiedi a juan...", back: "indietro" },
+  zh: { online: "Juan AI 在线。随便问我。", placeholder: "问 juan 任何问题...", back: "返回" },
+  ko: { online: "Juan AI 온라인. 뭐든 물어보세요.", placeholder: "juan에게 물어보세요...", back: "돌아가기" },
+  ja: { online: "Juan AI オンライン。何でも聞いてください。", placeholder: "juan に何でも聞いて...", back: "戻る" },
 };

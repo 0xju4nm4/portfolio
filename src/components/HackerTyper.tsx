@@ -252,6 +252,11 @@ export default function HackerTyper() {
 
   const showChatMode = chatReady && introHidden && (latestQuestion || isStreaming);
 
+  const handleBack = useCallback(() => {
+    setIntroZoomOut(false);
+    setIntroHidden(false);
+  }, []);
+
   return (
     <div className="flex flex-col h-dvh w-dvw overflow-x-hidden">
       {/* Scanline overlay */}
@@ -289,7 +294,7 @@ export default function HackerTyper() {
       {/* Main content area */}
       <div
         ref={containerRef}
-        className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-6 crt-glow"
+        className="flex-1 min-h-0 overflow-y-auto p-1 crt-glow"
         style={{ fontSize: "clamp(13px, 1.4vw, 18px)", lineHeight: "1.6" }}
       >
         {started ? (
@@ -318,6 +323,14 @@ export default function HackerTyper() {
             ) : (
               /* Chat mode — only show the latest question & animated response */
               <div className="font-mono animate-fade-in">
+                {/* Back button */}
+                <button
+                  onClick={handleBack}
+                  className="mb-4 text-[var(--color-green)] opacity-40 hover:opacity-80 transition-opacity font-mono text-sm"
+                >
+                  ← {UI_TEXT[lang].back}
+                </button>
+
                 {/* Latest question */}
                 {latestQuestion && (
                   <div className="mb-6 text-[var(--color-green)]">
@@ -347,13 +360,16 @@ export default function HackerTyper() {
         ) : (
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center opacity-40">
             <p className="text-2xl sm:text-3xl mb-3">Hi!</p>
+            <p className="text-sm sm:text-base">
+              Do something
+            </p>
           </div>
         )}
       </div>
 
       {/* Fixed input area — always visible when chat is ready */}
       {chatReady && (
-        <div className="shrink-0 px-4 sm:px-6 py-3 bg-[var(--color-bg)]" style={{ fontSize: "clamp(13px, 1.4vw, 18px)" }}>
+        <div className="shrink-0 px-1 py-1 bg-[var(--color-bg)]" style={{ fontSize: "clamp(13px, 1.4vw, 18px)" }}>
           <form onSubmit={handleSubmit} className="flex items-center gap-2 font-mono">
             <span className="text-[var(--color-green)] opacity-60">&gt;</span>
             <input
@@ -373,7 +389,7 @@ export default function HackerTyper() {
       )}
 
       {/* Bottom bar */}
-      <div className="flex items-center justify-between px-4 py-2 border-t border-[var(--color-green)] text-xs sm:text-sm font-mono text-[var(--color-green)] bg-[var(--color-bg)] shrink-0">
+      <div className="flex items-center justify-between px-2 py-2 border-t border-[var(--color-green)] text-xs sm:text-sm font-mono text-[var(--color-green)] bg-[var(--color-bg)] shrink-0">
         <div className="flex items-center gap-4 sm:gap-6 flex-wrap">
           <a href="mailto:juan@tntlabs.xyz" className="hover:underline">Email</a>
           <a href="https://linkedin.com/in/juan-manuel-villarraza-646958151" target="_blank" rel="noopener noreferrer" className="hover:underline">LinkedIn</a>
