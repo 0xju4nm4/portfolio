@@ -17,10 +17,20 @@ html, body {
   color: var(--color-green);
   font-family: var(--font-mono), "Courier New", Courier, monospace;
   width: 100%;
+  max-width: 100%;
   height: 100%;
   overflow: hidden;
+  overflow-x: hidden;
   cursor: default;
   user-select: none;
+}
+
+/* No horizontal scroll, ever. `anywhere` also feeds the intrinsic min-width
+   calculation, so a single long token cannot blow out a flex child. */
+.wrap-anywhere {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  max-width: 100%;
 }
 
 /* Blinking cursor */
@@ -77,3 +87,4 @@ html, body {
   background: #00ff41;
   border-radius: 2px;
 }
+

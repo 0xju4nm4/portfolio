@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -8,15 +8,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Juan Villarraza",
-  description: "Your Fav 10x Engineer",
+  title: "Juan Manuel Villarraza | Blockchain Engineer",
+  description:
+    "Blockchain Engineer building Web3 products end to end. Currently building Pálpito, on-chain prediction markets on Solana.",
 };
 
-export const viewport = {
+export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  // Shrink the layout when the on-screen keyboard opens instead of
+  // letting it cover the input (Chrome Android; iOS is handled in JS).
+  interactiveWidget: "resizes-content",
 };
 
 export default function RootLayout({
