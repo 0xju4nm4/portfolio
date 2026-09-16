@@ -8,8 +8,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Juan Villarraza",
-  description: "Your Fav 10x Engineer",
+  title: "Juan Manuel Villarraza | Blockchain Engineer",
+  description:
+    "Blockchain Engineer building Web3 products end to end. Currently building Pálpito, on-chain prediction markets on Solana.",
 };
 
 export const viewport = {

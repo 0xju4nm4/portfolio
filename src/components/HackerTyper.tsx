@@ -391,10 +391,11 @@ export default function HackerTyper() {
       {/* Bottom bar */}
       <div className="flex items-center justify-between px-2 py-2 border-t border-[var(--color-green)] text-xs sm:text-sm font-mono text-[var(--color-green)] bg-[var(--color-bg)] shrink-0">
         <div className="flex items-center gap-4 sm:gap-6 flex-wrap">
-          <a href="mailto:juan@tntlabs.xyz" className="hover:underline">Email</a>
+          <a href="mailto:juan.villarraza@gmail.com" className="hover:underline">Email</a>
           <a href="https://linkedin.com/in/juan-manuel-villarraza-646958151" target="_blank" rel="noopener noreferrer" className="hover:underline">LinkedIn</a>
           <a href="https://github.com/0xju4nm4" target="_blank" rel="noopener noreferrer" className="hover:underline">GitHub</a>
-          <a href="https://tntlabs.xyz" target="_blank" rel="noopener noreferrer" className="hover:underline">TNT Labs</a>
+          <a href="https://t.me/ju4nm4_dev" target="_blank" rel="noopener noreferrer" className="hover:underline">Telegram</a>
+          <a href="https://palpito.com" target="_blank" rel="noopener noreferrer" className="hover:underline">Pálpito</a>
           <span className="opacity-40 hidden sm:inline">Buenos Aires, Argentina</span>
         </div>
         <div className="hidden sm:block opacity-60">

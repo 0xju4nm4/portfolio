@@ -14,315 +14,392 @@ export const LANGUAGES: { code: LangCode; label: string; name: string }[] = [
 export const INTRO_TEXT: Record<LangCode, string> = {
   en: `> Hey, I'm Juan Manuel Villarraza.
 
-CTO at tntlabs.xyz - Product Studio and my own company
-focused on removing friction from DeFi.
-Staff Engineer & Architect based in Buenos Aires.
-I build things that move value across blockchains
-— and I make them feel simple.
+Blockchain Engineer based in Buenos Aires.
+I build Web3 products end to end, from
+architecture to shipped code.
 
-Most recently at Squid, where I built and scaled
-cross-chain routing infrastructure from the ground up.
-Hundreds of recurrent users, low latency, elegant
-architecture — designed to last, not just to ship.
+Right now that's Pálpito: on-chain prediction
+markets for Latin America, built on Solana.
+I lead the blockchain, smart contracts and
+integrations workstream, owning architecture
+and execution end to end.
 
-Before that, I led frontend teams in crypto fintech,
-built OTC trading desks, shipped NFT marketplaces
-end-to-end, and built UI at Globant and Mercado Libre
-for millions of users.
+That's built on 8+ years shipping Web3 products:
+cross-chain infrastructure moving liquidity
+across 100+ blockchains at Squid, multi-chain
+DeFi trading and lending at Membrane Labs, NFT
+marketplaces built from scratch, and UI at
+Globant and Mercado Libre.
 
-I've been writing code professionally since 2017.
-Bachelor's in Computer Science from Universidad
-Nacional de Rosario. Went from junior dev at a small
-fintech in Rosario to staff engineer on a globally
-distributed team — and now CTO of my own.
+I also co-founded TNT Labs, a studio building
+products at the intersection of AI and crypto.
+
+AI is part of how I work, not an add-on. I use
+it across the whole pipeline: architecture,
+planning, code, testing and documentation.
+That means working spec-driven: define the
+architecture and requirements clearly upfront,
+then leverage AI to execute against that spec,
+so velocity never costs consistency, code
+quality or architectural integrity.
+
+This isn't vibe coding. It's AI engineering.
 
 What I'm good at:
 
   → Designing systems that scale without losing clarity
   → Leading teams while staying hands-on
-  → Bridging the gap between product vision and code
-  → Making Web3 accessible to Web2 developers
+  → Bridging product vision and code
+  → Shipping spec-driven, with AI across the pipeline
   → Mentoring engineers and raising the bar
 
-I speak at Ethereum conferences.
-I think in systems, but I ship in sprints.
-I care about the craft, the team, and the user.
+I like building things people can trust:
+on-chain, auditable, and genuinely
+decentralized, not just marketed that way.
 
-Let's talk juan@tntlabs.xyz
+Let's talk juan.villarraza@gmail.com
 `,
 
   es: `> Hola, soy Juan Manuel Villarraza.
 
-CTO en tntlabs.xyz - Product Studio y mi propia empresa
-enfocada en simplificar DeFi.
-Staff Engineer & Arquitecto en Buenos Aires.
-Construyo cosas que mueven valor entre blockchains
-— y las hago parecer simples.
+Blockchain Engineer, basado en Buenos Aires.
+Construyo productos Web3 de punta a punta,
+de la arquitectura al código en producción.
 
-Lo más reciente: Squid, donde construí y escalé
-infraestructura de ruteo cross-chain desde cero.
-Cientos de usuarios recurrentes, baja latencia,
-arquitectura elegante — diseñada para durar.
+Hoy eso es Pálpito: mercados de predicción
+on-chain para Latinoamérica, sobre Solana.
+Lidero el workstream de blockchain, smart
+contracts e integraciones, con la arquitectura
+y la ejecución a mi cargo.
 
-Antes de eso, lideré equipos frontend en fintech crypto,
-construí mesas OTC, shippeé marketplaces NFT
-de punta a punta, e hice UI en Globant y Mercado Libre
-para millones de usuarios.
+Atrás hay 8+ años shippeando productos Web3:
+infraestructura cross-chain moviendo liquidez
+entre 100+ blockchains en Squid, trading y
+lending DeFi multichain en Membrane Labs,
+marketplaces NFT desde cero, y UI en Globant
+y Mercado Libre.
 
-Escribo código profesionalmente desde 2017.
-Licenciado en Ciencias de la Computación de la
-Universidad Nacional de Rosario. De junior en una
-fintech chica en Rosario a staff engineer en un equipo
-distribuido global — y ahora CTO de lo mío.
+También co-fundé TNT Labs, un estudio que
+construye productos en la intersección de
+AI y crypto.
+
+La AI es parte de cómo trabajo, no un agregado.
+La uso en todo el pipeline: arquitectura,
+planificación, código, testing y documentación.
+Eso significa trabajar spec-driven: definir
+arquitectura y requisitos con claridad primero,
+y después apalancar AI para ejecutar contra ese
+spec, para que la velocidad nunca cueste
+consistencia, calidad de código ni integridad
+arquitectónica.
+
+Esto no es vibe coding. Es AI engineering.
 
 En lo que soy bueno:
 
   → Diseñar sistemas que escalan sin perder claridad
-  → Liderar equipos sin dejar de meter mano en el código
+  → Liderar equipos sin soltar el código
   → Conectar la visión de producto con el código
-  → Hacer Web3 accesible para devs de Web2
+  → Shippear spec-driven, con AI en todo el pipeline
   → Mentorear ingenieros y subir la vara
 
-Doy charlas en conferencias de Ethereum.
-Pienso en sistemas, pero shippeo en sprints.
-Me importa el oficio, el equipo y el usuario.
+Me gusta construir cosas en las que se puede
+confiar: on-chain, auditables y genuinamente
+descentralizadas, no solo en el marketing.
 
-Hablemos juan@tntlabs.xyz
+Hablemos juan.villarraza@gmail.com
 `,
 
   pt: `> Oi, sou Juan Manuel Villarraza.
 
-CTO na tntlabs.xyz - Product Studio e minha própria empresa
-focada em remover fricção do DeFi.
-Staff Engineer & Arquiteto em Buenos Aires.
-Construo coisas que movem valor entre blockchains
-— e faço parecer simples.
+Blockchain Engineer, baseado em Buenos Aires.
+Construo produtos Web3 de ponta a ponta, da
+arquitetura ao código em produção.
 
-Mais recentemente na Squid, onde construí e escalei
-infraestrutura de roteamento cross-chain do zero.
-Centenas de usuários recorrentes, baixa latência,
-arquitetura elegante — feita pra durar.
+Hoje isso é Pálpito: mercados de predição
+on-chain para a América Latina, na Solana.
+Lidero o workstream de blockchain, smart
+contracts e integrações, com a arquitetura
+e a execução sob minha responsabilidade.
 
-Antes disso, liderei times de frontend em fintech crypto,
-construí mesas OTC, entreguei marketplaces NFT
-de ponta a ponta, e fiz UI na Globant e Mercado Libre
-pra milhões de usuários.
+Por trás disso tem 8+ anos entregando produtos
+Web3: infraestrutura cross-chain movendo
+liquidez entre 100+ blockchains na Squid,
+trading e lending DeFi multichain na Membrane
+Labs, marketplaces NFT do zero, e UI na Globant
+e no Mercado Libre.
 
-Escrevo código profissionalmente desde 2017.
-Bacharel em Ciência da Computação pela Universidad
-Nacional de Rosario. De junior numa fintech pequena
-em Rosario a staff engineer num time distribuído global
-— e agora CTO do meu próprio negócio.
+Também co-fundei a TNT Labs, um estúdio que
+constrói produtos na interseção de AI e crypto.
+
+AI é parte de como eu trabalho, não um extra.
+Uso em todo o pipeline: arquitetura,
+planejamento, código, testes e documentação.
+Isso significa trabalhar spec-driven: definir
+arquitetura e requisitos com clareza primeiro,
+e depois usar AI para executar contra esse spec,
+para que a velocidade nunca custe consistência,
+qualidade de código ou integridade
+arquitetural.
+
+Isso não é vibe coding. É AI engineering.
 
 No que sou bom:
 
   → Projetar sistemas que escalam sem perder clareza
-  → Liderar times sem largar a mão do código
-  → Conectar visão de produto com código
-  → Tornar Web3 acessível pra devs Web2
+  → Liderar times sem largar o código
+  → Conectar visão de produto e código
+  → Entregar spec-driven, com AI em todo o pipeline
   → Mentorar engenheiros e elevar o nível
 
-Palestro em conferências de Ethereum.
-Penso em sistemas, mas entrego em sprints.
-Me importo com o ofício, o time e o usuário.
+Gosto de construir coisas em que dá pra
+confiar: on-chain, auditáveis e genuinamente
+descentralizadas, não só no marketing.
 
-Bora conversar juan@tntlabs.xyz
+Bora conversar juan.villarraza@gmail.com
 `,
 
   fr: `> Salut, je suis Juan Manuel Villarraza.
 
-CTO chez tntlabs.xyz - Product Studio et ma propre boîte
-focalisée sur simplifier le DeFi.
-Staff Engineer & Architecte basé à Buenos Aires.
-Je construis des trucs qui déplacent de la valeur
-entre blockchains — et je les rends simples.
+Blockchain Engineer, basé à Buenos Aires.
+Je construis des produits Web3 de bout en bout,
+de l'architecture au code en production.
 
-Dernièrement chez Squid, où j'ai construit et scalé
-l'infrastructure de routage cross-chain depuis zéro.
-Des centaines d'utilisateurs récurrents, faible latence,
-architecture élégante — conçue pour durer.
+En ce moment, c'est Pálpito : des marchés de
+prédiction on-chain pour l'Amérique latine,
+sur Solana. Je dirige le workstream blockchain,
+smart contracts et intégrations, avec
+l'architecture et l'exécution à ma charge.
 
-Avant ça, j'ai dirigé des équipes frontend en fintech
-crypto, construit des desks OTC, livré des marketplaces
-NFT de bout en bout, et fait de l'UI chez Globant
-et Mercado Libre pour des millions d'utilisateurs.
+Derrière, il y a 8+ ans à livrer des produits
+Web3 : infrastructure cross-chain déplaçant de
+la liquidité entre 100+ blockchains chez Squid,
+trading et lending DeFi multichain chez Membrane
+Labs, des marketplaces NFT construites de zéro,
+et de l'UI chez Globant et Mercado Libre.
 
-J'écris du code pro depuis 2017.
-Licence en Informatique de l'Universidad Nacional
-de Rosario. De dev junior dans une petite fintech
-à Rosario à staff engineer dans une équipe distribuée
-à l'échelle mondiale — et maintenant CTO de ma boîte.
+J'ai aussi co-fondé TNT Labs, un studio qui
+construit des produits à l'intersection de
+l'AI et de la crypto.
+
+L'AI fait partie de ma façon de travailler, ce
+n'est pas un extra. Je l'utilise sur tout le
+pipeline : architecture, planification, code,
+tests et documentation. Ça veut dire travailler
+spec-driven : définir clairement l'architecture
+et les exigences en amont, puis m'appuyer sur
+l'AI pour exécuter contre ce spec, pour que la
+vélocité ne coûte jamais la cohérence, la
+qualité du code ou l'intégrité architecturale.
+
+Ce n'est pas du vibe coding. C'est de
+l'AI engineering.
 
 Ce dans quoi je suis bon :
 
   → Concevoir des systèmes qui scalent sans perdre en clarté
-  → Diriger des équipes tout en restant les mains dans le code
+  → Diriger des équipes en restant dans le code
   → Faire le pont entre vision produit et code
-  → Rendre le Web3 accessible aux devs Web2
+  → Livrer spec-driven, avec l'AI sur tout le pipeline
   → Mentorer des ingénieurs et élever le niveau
 
-Je parle aux conférences Ethereum.
-Je pense en systèmes, mais je livre en sprints.
-Le métier, l'équipe et l'utilisateur — c'est ce qui compte.
+J'aime construire des choses auxquelles on peut
+faire confiance : on-chain, auditables et
+vraiment décentralisées, pas seulement dans
+le marketing.
 
-Parlons-en juan@tntlabs.xyz
+Parlons-en juan.villarraza@gmail.com
 `,
 
   it: `> Ciao, sono Juan Manuel Villarraza.
 
-CTO di tntlabs.xyz - Product Studio e la mia azienda
-focalizzata su semplificare il DeFi.
-Staff Engineer & Architetto a Buenos Aires.
-Costruisco cose che muovono valore tra blockchain
-— e le faccio sembrare semplici.
+Blockchain Engineer, con base a Buenos Aires.
+Costruisco prodotti Web3 end to end,
+dall'architettura al codice in produzione.
 
-Più di recente da Squid, dove ho costruito e scalato
-infrastruttura di routing cross-chain da zero.
-Centinaia di utenti ricorrenti, bassa latenza,
-architettura elegante — progettata per durare.
+Oggi questo è Pálpito: mercati di predizione
+on-chain per l'America Latina, su Solana.
+Guido il workstream di blockchain, smart
+contract e integrazioni, con architettura ed
+esecuzione sotto la mia responsabilità.
 
-Prima di quello, ho guidato team frontend in fintech
-crypto, costruito desk OTC, consegnato marketplace NFT
-end-to-end, e fatto UI da Globant e Mercado Libre
-per milioni di utenti.
+Dietro ci sono 8+ anni di prodotti Web3
+consegnati: infrastruttura cross-chain che
+muove liquidità tra 100+ blockchain in Squid,
+trading e lending DeFi multichain in Membrane
+Labs, marketplace NFT costruiti da zero, e UI
+in Globant e Mercado Libre.
 
-Scrivo codice professionalmente dal 2017.
-Laurea in Informatica all'Universidad Nacional
-de Rosario. Da dev junior in una piccola fintech
-a Rosario a staff engineer in un team distribuito
-globalmente — e ora CTO della mia azienda.
+Ho anche co-fondato TNT Labs, uno studio che
+costruisce prodotti all'intersezione tra
+AI e crypto.
+
+L'AI fa parte di come lavoro, non è un extra.
+La uso su tutto il pipeline: architettura,
+pianificazione, codice, testing e
+documentazione. Significa lavorare spec-driven:
+definire architettura e requisiti con chiarezza
+prima, e poi sfruttare l'AI per eseguire contro
+quello spec, così la velocità non costa mai
+coerenza, qualità del codice o integrità
+architetturale.
+
+Questo non è vibe coding. È AI engineering.
 
 In cosa sono bravo:
 
   → Progettare sistemi che scalano senza perdere chiarezza
-  → Guidare team restando con le mani nel codice
-  → Collegare la visione di prodotto al codice
-  → Rendere il Web3 accessibile ai dev Web2
+  → Guidare team restando dentro il codice
+  → Collegare visione di prodotto e codice
+  → Consegnare spec-driven, con l'AI su tutto il pipeline
   → Fare mentoring e alzare l'asticella
 
-Parlo alle conferenze Ethereum.
-Penso in sistemi, ma consegno in sprint.
-Mi importa del mestiere, del team e dell'utente.
+Mi piace costruire cose di cui ci si può
+fidare: on-chain, verificabili e davvero
+decentralizzate, non solo nel marketing.
 
-Parliamone juan@tntlabs.xyz
+Parliamone juan.villarraza@gmail.com
 `,
 
   zh: `> 嗨，我是 Juan Manuel Villarraza。
 
-tntlabs.xyz 的 CTO — 我自己的产品工作室，
-专注于简化 DeFi 的使用体验。
-Staff Engineer & 架构师，坐标布宜诺斯艾利斯。
-我构建跨链价值流转的基础设施
-— 并让它们看起来很简单。
+Blockchain Engineer，常驻布宜诺斯艾利斯。
+我端到端地构建 Web3 产品，
+从架构一路到上线的代码。
 
-最近在 Squid，从零开始构建和扩展了
-跨链路由基础设施。
-数百名活跃用户，低延迟，
-优雅的架构 — 为持久而设计。
+现在做的是 Pálpito：面向拉丁美洲的
+链上预测市场，建立在 Solana 上。
+我负责区块链、智能合约与集成这条主线，
+架构和落地执行都由我承担。
 
-在此之前，我在加密金融科技领域带过前端团队，
-搭建过 OTC 交易平台，端到端交付过 NFT 市场，
-还在 Globant 和 Mercado Libre
-为数百万用户做过 UI。
+背后是 8 年以上交付 Web3 产品的经历：
+在 Squid 做跨链基础设施，在 100+ 条链之间
+流转流动性；在 Membrane Labs 做多链 DeFi
+交易与借贷；从零构建 NFT 市场；
+以及在 Globant 和 Mercado Libre 做 UI。
 
-从 2017 年开始写代码。
-罗萨里奥国立大学计算机科学学士。
-从罗萨里奥一家小金融科技公司的初级开发，
-到全球分布式团队的 Staff Engineer
-— 现在是自己公司的 CTO。
+我还与人共同创办了 TNT Labs，
+一个位于 AI 与 crypto 交叉点的产品工作室。
+
+AI 是我工作方式的一部分，不是附加项。
+我在整个流程里使用它：架构、规划、编码、
+测试和文档。这意味着 spec-driven 的工作方式：
+先把架构和需求定义清楚，再借助 AI
+按照这份 spec 执行，让速度不必以一致性、
+代码质量或架构完整性为代价。
+
+这不是 vibe coding，这是 AI engineering。
 
 我擅长的：
 
-  → 设计可扩展且清晰的系统
+  → 设计可扩展且不失清晰的系统
   → 带团队的同时保持动手写代码
   → 连接产品愿景与代码实现
-  → 让 Web3 对 Web2 开发者更友好
+  → 以 spec 驱动交付，AI 贯穿整个流程
   → 指导工程师，提升团队水平
 
-我在以太坊大会上做技术演讲。
-我用系统思维思考，用 sprint 交付。
-我在乎手艺、团队和用户。
+我喜欢构建值得信任的东西：
+链上、可审计、真正去中心化，
+而不只是营销话术。
 
-聊聊吧 juan@tntlabs.xyz
+聊聊吧 juan.villarraza@gmail.com
 `,
 
   ko: `> 안녕하세요, Juan Manuel Villarraza입니다.
 
-tntlabs.xyz의 CTO — DeFi의 마찰을 줄이는 데
-집중하는 나만의 프로덕트 스튜디오입니다.
-부에노스아이레스 기반 Staff Engineer & 아키텍트.
-블록체인 간 가치 이동을 구축하고
-— 그걸 심플하게 만듭니다.
+부에노스아이레스 기반 Blockchain Engineer.
+아키텍처부터 실제 배포되는 코드까지,
+Web3 제품을 엔드투엔드로 만듭니다.
 
-최근에는 Squid에서 크로스체인 라우팅
-인프라를 처음부터 구축하고 확장했습니다.
-수백 명의 활성 사용자, 낮은 지연시간,
-우아한 아키텍처 — 오래가도록 설계했습니다.
+지금은 Pálpito입니다. Solana 위에 올린
+라틴아메리카 대상 온체인 예측 시장이고,
+블록체인, 스마트 컨트랙트, 인테그레이션
+워크스트림을 이끌면서 아키텍처와 실행을
+직접 책임지고 있습니다.
 
-그 전에는 크립토 핀테크에서 프론트엔드 팀을 이끌고,
-OTC 트레이딩 데스크를 구축하고, NFT 마켓플레이스를
-처음부터 끝까지 배포하고, Globant과 Mercado Libre에서
-수백만 사용자를 위한 UI를 만들었습니다.
+그 밑에는 8년 넘게 Web3 제품을 출시해 온
+경험이 있습니다. Squid에서 100+ 체인 사이로
+유동성을 옮기는 크로스체인 인프라,
+Membrane Labs에서 멀티체인 DeFi 트레이딩과
+렌딩, 처음부터 만든 NFT 마켓플레이스,
+그리고 Globant과 Mercado Libre에서의 UI.
 
-2017년부터 전문적으로 코드를 작성해왔습니다.
-로사리오 국립대학교 컴퓨터과학 학사.
-로사리오의 작은 핀테크 주니어 개발자에서
-글로벌 분산 팀의 Staff Engineer로
-— 그리고 지금은 내 회사의 CTO.
+AI와 crypto의 교차점에서 제품을 만드는
+스튜디오 TNT Labs를 공동 창업하기도 했습니다.
+
+AI는 제 작업 방식의 일부지 부가 기능이
+아닙니다. 아키텍처, 기획, 코드, 테스트,
+문서화까지 전체 파이프라인에서 사용합니다.
+그래서 spec-driven으로 일합니다. 아키텍처와
+요구사항을 먼저 명확히 정의하고, 그 스펙에
+맞춰 AI로 실행합니다. 속도가 일관성이나
+코드 품질, 아키텍처 무결성을 대가로
+치르지 않도록.
+
+이건 vibe coding이 아니라 AI engineering입니다.
 
 잘하는 것:
 
-  → 명확성을 잃지 않으면서 확장 가능한 시스템 설계
+  → 명확성을 잃지 않으면서 확장되는 시스템 설계
   → 직접 코딩하면서 팀 리딩
-  → 제품 비전과 코드 사이의 간극 메우기
-  → Web2 개발자에게 Web3를 쉽게 만들기
+  → 제품 비전과 코드 사이를 잇기
+  → 스펙 기반으로, 전 파이프라인에 AI를 써서 출시
   → 엔지니어 멘토링과 수준 향상
 
-이더리움 컨퍼런스에서 발표합니다.
-시스템으로 사고하고, 스프린트로 배포합니다.
-기술, 팀, 그리고 사용자를 중요하게 생각합니다.
+저는 신뢰할 수 있는 것을 만드는 걸 좋아합니다.
+온체인이고, 검증 가능하고, 마케팅 문구가 아니라
+실제로 탈중앙화된 것들.
 
-연락주세요 juan@tntlabs.xyz
+연락주세요 juan.villarraza@gmail.com
 `,
 
   ja: `> こんにちは、Juan Manuel Villarraza です。
 
-tntlabs.xyz の CTO — DeFi の摩擦をなくすことに
-フォーカスした自分のプロダクトスタジオです。
-ブエノスアイレス拠点の Staff Engineer & アーキテクト。
-ブロックチェーン間で価値を動かすものを作り
-— それをシンプルに見せます。
+ブエノスアイレス拠点の Blockchain Engineer。
+アーキテクチャから本番のコードまで、
+Web3 プロダクトをエンドツーエンドで作ります。
 
-直近では Squid で、クロスチェーンルーティング
-インフラをゼロから構築・スケールしました。
-数百人のアクティブユーザー、低レイテンシー、
-エレガントなアーキテクチャ — 長持ちする設計。
+今やっているのは Pálpito。Solana 上に構築した
+ラテンアメリカ向けのオンチェーン予測市場です。
+ブロックチェーン、スマートコントラクト、
+インテグレーションのワークストリームを率いて、
+アーキテクチャと実行を自分で持っています。
 
-その前は、クリプトフィンテックでフロントエンドチームを
-リード、OTC トレーディングデスクを構築、
-NFT マーケットプレイスをエンドツーエンドで納品、
-Globant と Mercado Libre で数百万ユーザー向けの
-UI を作りました。
+その土台には 8 年以上 Web3 プロダクトを
+出してきた経験があります。Squid では 100+ の
+チェーン間で流動性を動かすクロスチェーン基盤、
+Membrane Labs ではマルチチェーンの DeFi
+トレーディングとレンディング、NFT
+マーケットプレイスをゼロから、そして Globant と
+Mercado Libre では UI を作りました。
 
-2017年からプロとしてコードを書いています。
-ロサリオ国立大学コンピュータサイエンス学士。
-ロサリオの小さなフィンテックのジュニア開発者から
-グローバル分散チームの Staff Engineer へ
-— そして今、自分の会社の CTO。
+AI と crypto の交差点でプロダクトを作る
+スタジオ TNT Labs も共同創業しています。
+
+AI は働き方の一部であって、後付けの機能では
+ありません。アーキテクチャ、計画、コード、
+テスト、ドキュメントまでパイプライン全体で
+使います。つまり spec-driven に働くということ。
+アーキテクチャと要件を先に明確に定義し、その
+スペックに沿って AI で実行する。速度が一貫性や
+コード品質、アーキテクチャの整合性を犠牲に
+しないように。
+
+これは vibe coding ではなく AI engineering です。
 
 得意なこと：
 
   → 明確さを失わずにスケールするシステム設計
-  → ハンズオンを維持しながらのチームリード
-  → プロダクトビジョンとコードの橋渡し
-  → Web2 開発者に Web3 をわかりやすくする
-  → エンジニアのメンタリングとレベルアップ
+  → 手を動かしながらのチームリード
+  → プロダクトの構想とコードをつなぐ
+  → スペック駆動で、AI をパイプライン全体に使って出荷
+  → エンジニアのメンタリングと基準の引き上げ
 
-Ethereum カンファレンスで登壇しています。
-システムで考え、スプリントで出荷します。
-技術、チーム、そしてユーザーを大切にしています。
+信頼できるものを作るのが好きです。
+オンチェーンで、検証可能で、マーケティングの
+言葉だけではなく本当に分散されたもの。
 
-話しましょう juan@tntlabs.xyz
+話しましょう juan.villarraza@gmail.com
 `,
 };
 
